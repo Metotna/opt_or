@@ -1,0 +1,22 @@
+<template>
+  <div>
+    <el-button type='warning'>这是主页</el-button>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      msg:''
+    }
+  },
+  methods: {
+    
+  }
+}
+
+</script>
+<style>
+
+
+</style>

@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <el-button  type='warning'>这是主页</el-button>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      msg:''
+    }
+  },
+  methods: {
+    fetchData: async function() {
+      // let data = {
+      //   token: '60ce1dee0662edd0045b90511ebbbe44',
+      //   picture: this.$refs.filss.files[0]
+      // }
+      // const res = await this.http.default.imgpost('/usr/set/head', data)
+      let data = {
+        token: '7d805077746125afeb9ad468e2a938f9',
+        pid: '000000'
+      }
+      const res = await this.http.default.post('/init', data)
+      if (res.data) {
+        this.msg = res
+      }
+    },
+    updata(){
+      var s= this.$refs.filss.files[0];
+      var file = document.querySelector('input[type=file]').files[0];
+    }
+  }
+}
+
+</script>
+<style>
+
+
+</style>

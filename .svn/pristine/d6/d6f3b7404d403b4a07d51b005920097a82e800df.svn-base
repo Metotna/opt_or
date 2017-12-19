@@ -1,0 +1,180 @@
+exports.install = function(Vue, options) {
+  Vue.prototype.changeData = function(val) {
+    console.log('执行成功' + val);
+  };
+  Vue.prototype.http = require('./http');
+  Vue.prototype.orderdeal = function() {
+    var Format = {
+      '3': {
+        '1': '七星彩'
+      },
+      '4': {
+        '1': '直选三',
+        '2': '组三',
+        '3': '组六',
+      },
+      '5': {
+        '1': '排列五',
+      },
+      '6': {
+        '1': '普通',
+        '2': '追加',
+      },
+      '7': {
+        '1': '任选一',
+        '2': '任选二',
+        '3': '任选三',
+        '4': '任选四',
+        '5': '任选五',
+        '6': '任选六',
+        '7': '任选七',
+        '8': '任选八',
+        '9': '前二直选',
+        '10': '前三直选',
+        '11': '前二组选',
+        '12': '前三组选',
+      },
+      '8': {
+        '1': '任选一',
+        '2': '任选二',
+        '3': '任选三',
+        '4': '任选四',
+        '5': '任选五',
+        '6': '任选六',
+        '7': '任选七',
+        '8': '任选八',
+        '9': '前二直选',
+        '10': '前三直选',
+        '11': '前二组选',
+        '12': '前三组选',
+      },
+      '9': {
+        '1': '任选一',
+        '2': '任选二',
+        '3': '任选三',
+        '4': '任选四',
+        '5': '任选五',
+        '6': '任选六',
+        '7': '任选七',
+        '8': '任选八',
+        '9': '前二直选',
+        '10': '前三直选',
+        '11': '前二组选',
+        '12': '前三组选',
+      },
+      '10': {
+        '1': '任选一',
+        '2': '任选二',
+        '3': '任选三',
+        '4': '任选四',
+        '5': '任选五',
+        '6': '任选六',
+        '7': '任选七',
+        '8': '任选八',
+        '9': '前二直选',
+        '10': '前三直选',
+        '11': '前二组选',
+        '12': '前三组选',
+      },
+      '11': {
+        '1': '普通',
+      },
+      '12': {
+        '1': '普通',
+      },
+      '13': {
+        '1': '直选',
+        '2': '组三',
+        '3': '组六',
+      }
+    }
+    var Firstsd = {
+      '1': '单式',
+      '2': '复式',
+      '3': '包号',
+      '4': '和值',
+      '5': '胆拖',
+    }
+    var zqhhs = function(val) {
+      var temp = val.split('=');
+      switch (temp[0]) {
+        case 'SPF':
+          temp[1] = temp[1].replace(/3/g, '胜').replace(/1/g, '平').replace(/0/g, '负');
+          break;
+        case 'BQC':
+          temp[1] = temp[1].replace(/3/g, '胜').replace(/1/g, '平').replace(/0/g, '负');
+          break;
+        case 'JQS':
+          temp[1] = temp[1];
+          break;
+        case 'RSPF':
+          temp[1] = temp[1].replace(/3/g, '让胜').replace(/1/g, '让平').replace(/0/g, '让负');
+          break;
+      }
+      return temp[1];
+    }
+    return {
+      detailsZ(val) {
+        var tempval = val.split('|');
+        var cot = tempval[1].split(',');
+        if (tempval[0] == 'ZQHH') {
+          var spst = '>';
+        } else {
+          var spst = '='
+        }
+        var tempary = [];
+        for (var x in cot) {
+          tempary[x] = cot[x].split(spst);
+          switch (tempval[0]) {
+            case 'SPF':
+              tempary[x][1] = tempary[x][1].replace(/3/g, '胜').replace(/1/g, '平').replace(/0/g, '负');
+              break;
+            case 'BQC':
+              tempary[x][1] = tempary[x][1].replace(/3/g, '胜').replace(/1/g, '平').replace(/0/g, '负');
+              break;
+            case 'JQS':
+              tempary[x][1] = tempary[x][1];
+              break;
+            case 'ZQHH':
+              tempary[x][1] = zqhhs(tempary[x][1]);
+              break;
+            case 'RSPF':
+              tempary[x][1] = tempary[x][1].replace(/3/g, '让胜').replace(/1/g, '让平').replace(/0/g, '让负');
+              break;
+          }
+        }
+        return tempary
+      },
+      //详情过关方式
+      /*数字彩拆分*/
+      detailsS: function(val,id) {
+        // console.log(val,id)
+        var str = '';
+        var str1 = '';
+        var obj = {};
+        var arry1 = [];
+        var arry2 = [];
+        arry1 = val.split(";")
+        for ( var j in arry1){
+  
+          str = '';
+          obj = {};
+          var arry3 = [];
+          arry3 = arry1[j].split(':');
+          for (var k = 0; k < arry3.length - 2; k++) {
+            var arry4 = [];
+            arry4 = arry3[k].split(',')
+            str=arry4.join(' ');
+            str1 = Format[id][arry3[arry3.length - 2]] + Firstsd[arry3[arry3.length - 1]];
+          }
+          obj.bets = str;
+          obj.play = str1;
+          arry2.push(obj);
+        }
+
+        return arry2;
+      }
+    }
+  };
+
+}

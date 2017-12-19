@@ -1,0 +1,78 @@
+<template>
+  <div id="layout">
+    <header-Nav></header-Nav>
+    <content>
+      <el-row>
+        <el-col :span="4" class="cot-l">
+          <menu-List></menu-List>
+        </el-col>
+        <el-col :span="20" class="cot-r">
+          <router-view></router-view>
+        </el-col>
+      </el-row>
+    </content>
+  </div>
+</template>
+<script>
+import headerNav from '../components/headerNav'
+import menuList from '../components/menuList'
+import breadCrumb from '../components/breadCrumb'
+export default {
+  name: 'layout',
+  components: {
+    headerNav,
+    menuList,
+    breadCrumb
+  }
+}
+
+</script>
+<style>
+content {
+  background-color: #48576a;
+  display: block;
+  top: 65px;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  overflow: hidden;
+  bottom: 0;
+  width: 100%;
+}
+
+.el-row {
+  width: 100%;
+  overflow: hidden;
+  min-width: 800px;
+}
+
+.el-row .el-col {
+  height: 100%;
+}
+
+.cot-l {
+  background-color: #48576a;
+  height: 100%;
+  overflow: auto;
+}
+
+.cot-r {
+  display: flex;
+  /*  position: absolute;
+  top: 0;
+  left: 16.66667%;
+  bottom: 0;*/
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+  padding: 40px 40px;
+  background-color: #f2f3f8;
+}
+
+.el-scrollbar__wrap {
+  overflow-x: hidden !important;
+  margin-bottom: 0 !important;
+}
+
+</style>
